@@ -1,0 +1,1 @@
+Rails.application.config.secret_key_base = 'some_very_long_random_string'

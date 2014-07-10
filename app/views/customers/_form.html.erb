@@ -1,0 +1,17 @@
+<div class='alert alert-info fade in' data-alert='alert'>
+   <h3>Customer</h3>
+</div>
+
+<%= simple_form_for @customer,  as: 'customer', html: { class: 'form-horizontal' },
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+   <%= f.input :name, label: "Name" %>
+   <%= f.input :number, label: "Number" %>   
+   <%= f.input :permit, as: :boolean, checked_value: true, unchecked_value: false %>   
+   <%= f.button :submit %>
+<% end %>

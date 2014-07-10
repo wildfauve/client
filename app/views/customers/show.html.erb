@@ -1,0 +1,9 @@
+<div class="jumbotron">
+   <h3><%= @customer.name %></h3>
+</div>
+
+
+<% for holding in @customer.holdings["holdings"] %>
+   Stock Symbol<%= holding["stock_symbol"] %>
+   Qty <%= holding["qty"] %>
+<% end %>
