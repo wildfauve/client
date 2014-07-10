@@ -12,9 +12,11 @@ class IdentitiesController < ApplicationController
   
   def authorisation
     # Get an access token for the logged_in user from the ID Service using an OAuth /token call
-    IdentityAdapter.new.get_access(params)
     # Now we need to create an internal "user" by getting the /me
-    
+    auth = IdentityAdapter.new.get_access(params)
+    user_proxy = UserProxy.find_or_create(auth: auth)
+    session[:user_proxy] = {proxy_id: user_proxy.id.to_s, expires: 10.minutes.from_now}
+    redirect_to customers_path
   end
   
 end

@@ -2,7 +2,7 @@ class CustomersController < ApplicationController
 
   def index 
     @customers = Customer.all
-    session[:client_id] = "1234"
+    #raise
   end
   
   def new

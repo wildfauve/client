@@ -1,5 +1,7 @@
 class IdentityAdapter
   
+  attr_accessor :user, :access_token
+  
   include UrlHelpers
   
   def authorise_url
@@ -41,8 +43,9 @@ class IdentityAdapter
     conn.params = {access_code: @access_token["access_code"]} 
     conn.basic_auth Client::Application.config.client_id, Client::Application.config.client_secret    
     resp = conn.get
-    # Associate the ID User with the Customer
-    raise
+    raise if resp.status >= 300
+    @user = JSON.parse(resp.body)
+    self
   end
   
 end
