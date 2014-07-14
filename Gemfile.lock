@@ -60,11 +60,6 @@ GEM
     execjs (2.2.1)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
-    her (0.6.8)
-      activemodel (>= 3.0.0)
-      activesupport (>= 3.0.0)
-      faraday (~> 0.8)
-      multi_json (~> 1.7)
     hike (1.2.3)
     i18n (0.6.9)
     jbuilder (2.1.1)
@@ -74,6 +69,7 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
+    jwt (1.0.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -173,9 +169,9 @@ DEPENDENCIES
   binding_of_caller
   coffee-rails (~> 4.0.0)
   faraday
-  her
   jbuilder (~> 2.0)
   jquery-rails
+  jwt
   meta_request
   mongoid!
   pry

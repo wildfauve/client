@@ -1,6 +1,6 @@
 class IdentityAdapter
   
-  attr_accessor :user, :access_token
+  attr_accessor :user, :access_token, :id_token, :id_token_encoded
   
   include UrlHelpers
   
@@ -35,7 +35,9 @@ class IdentityAdapter
     resp = conn.post
     raise if resp.status >= 300
     @access_token = JSON.parse(resp.body)
-    get_user()
+    validate_id_token()
+    self
+    #get_user()
   end
 
   def get_user
@@ -46,6 +48,20 @@ class IdentityAdapter
     raise if resp.status >= 300
     @user = JSON.parse(resp.body)
     self
+  end
+  
+  def validate_id_token
+    begin
+      @id_token_encoded = @access_token["id_token"]      
+      @id_token = JWT.decode(@id_token_encoded, Client::Application.config.id_token_secret).inject(&:merge)
+      raise
+    rescue JWT::DecodeError => e
+      raise
+    end
+  end
+  
+  def id_token_provided?
+    @id_token ? true : false
   end
   
 end
