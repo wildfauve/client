@@ -36,14 +36,15 @@ class IdentityAdapter
     raise if resp.status >= 300
     @access_token = JSON.parse(resp.body)
     validate_id_token()
+    get_user()
     self
-    #get_user()
   end
 
   def get_user
-    conn = Faraday.new(url: 'http://localhost:3010/me')    
+    conn = Faraday.new(url: 'http://localhost:3010/userinfo')    
     conn.params = {access_code: @access_token["access_code"]} 
-    conn.basic_auth Client::Application.config.client_id, Client::Application.config.client_secret    
+    #conn.basic_auth Client::Application.config.client_id, Client::Application.config.client_secret    
+    conn.authorization :Bearer, @access_token["access_code"]
     resp = conn.get
     raise if resp.status >= 300
     @user = JSON.parse(resp.body)
@@ -54,7 +55,6 @@ class IdentityAdapter
     begin
       @id_token_encoded = @access_token["id_token"]      
       @id_token = JWT.decode(@id_token_encoded, Client::Application.config.id_token_secret).inject(&:merge)
-      raise
     rescue JWT::DecodeError => e
       raise
     end
