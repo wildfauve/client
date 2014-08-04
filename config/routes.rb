@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get 'sign_up'
       get 'login'
       get 'authorisation'
+      put 'logout'
     end
   end
   

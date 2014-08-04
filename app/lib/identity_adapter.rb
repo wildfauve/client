@@ -1,6 +1,6 @@
 class IdentityAdapter
   
-  attr_accessor :user, :access_token, :id_token, :id_token_encoded
+  attr_accessor :user, :access_token, :id_token, :id_token_encoded, :user_proxy
   
   include UrlHelpers
   
@@ -11,6 +11,12 @@ class IdentityAdapter
     q[:state] = "signup"
     q[:client_id] = Client::Application.config.client_id
     "http://localhost:3010/authorise?#{q.to_query}"
+  end
+  
+  def logout_url(user_proxy: nil)
+    q = {post_logout_redirect_uri: url_helpers.root_url(host: "localhost:3000")}
+    q[:id_token_hint] = user_proxy.id_token_encoded
+    "http://localhost:3010/logout?#{q.to_query}"
   end
   
   #POST /token HTTP/1.1
@@ -37,6 +43,7 @@ class IdentityAdapter
     @access_token = JSON.parse(resp.body)
     validate_id_token()
     get_user()
+    @user_proxy = UserProxy.find_or_create(auth: self, id_token_provided: self.id_token_provided?)
     self
   end
 
