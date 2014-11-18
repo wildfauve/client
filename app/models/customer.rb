@@ -17,7 +17,7 @@ class Customer
   
   def self.create_it(params)
     c = self.new
-    c.subscribe(EventHandler.new)
+    #c.subscribe(EventHandler.new)
     c.name = params[:name]
     c.number = params[:number]
     c.permit = params[:permit]
@@ -71,6 +71,7 @@ class Customer
   
   def publish_save_event
     publish(:customer_change_event, self)
+    
   end
     
   

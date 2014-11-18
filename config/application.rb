@@ -16,13 +16,7 @@ Bundler.require(*Rails.groups)
 module Client
   class Application < Rails::Application
     
-    # get using Identity::Application.config.client_secret
-    config.client_id = "client_service"
-    
-    config.client_secret = "$2a$10$HlSlN056SVcxDNeGort5x."
-    
-    config.id_token_secret = "id_token_secret"
-    
+    # get using Identity::Application.config.client_secret    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

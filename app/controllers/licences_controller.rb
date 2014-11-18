@@ -1,7 +1,7 @@
 class LicencesController < ApplicationController
   
   def index
-    redirect_to "http://localhost:3002?client_id=1234"
+    redirect_to "http://licence.local:8012"
   end
   
 end
